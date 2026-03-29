@@ -158,13 +158,15 @@ export default function Index() {
           <p className="hint">Нажмите на сердце, чтобы включить музыку</p>
         )}
 
-        {/* Кнопка смены трека */}
-        <button
-          className="change-track-btn"
-          onClick={(e) => { e.stopPropagation(); setShowUpload(true); }}
-        >
-          {audioUrl ? "сменить трек" : "загрузить музыку"}
-        </button>
+        {/* Кнопка смены трека — только если музыка не загружена */}
+        {!audioUrl && (
+          <button
+            className="change-track-btn"
+            onClick={(e) => { e.stopPropagation(); setShowUpload(true); }}
+          >
+            загрузить музыку
+          </button>
+        )}
       </div>
 
       {/* Панель загрузки */}
