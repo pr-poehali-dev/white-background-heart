@@ -5,6 +5,8 @@ import hmac
 import hashlib
 import datetime
 import urllib.request
+import re
+import unicodedata
 
 def _sign(key, msg):
     return hmac.new(key, msg.encode('utf-8'), hashlib.sha256).digest()
@@ -101,7 +103,10 @@ def handler(event: dict, context) -> dict:
     access_key = os.environ['AWS_ACCESS_KEY_ID']
     secret_key = os.environ['AWS_SECRET_ACCESS_KEY']
 
-    key = f'audio/{filename}'
+    # Транслитерация: убираем не-ASCII символы из имени файла
+    safe_name = unicodedata.normalize('NFKD', filename).encode('ascii', 'ignore').decode('ascii')
+    safe_name = re.sub(r'[^\w.\-]', '_', safe_name) or 'track.mp3'
+    key = f'audio/{safe_name}'
     s3_put('files', key, audio_bytes, content_type, access_key, secret_key)
 
     cdn_url = f"https://cdn.poehali.dev/projects/{access_key}/files/{key}"
