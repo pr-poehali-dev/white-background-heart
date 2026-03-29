@@ -99,3 +99,296 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* === Переменные страницы === */
+:root {
+  --page-bg: #fdf6f7;
+  --rose: #d4697a;
+  --rose-light: #f2b8c0;
+  --rose-pale: #fce8ec;
+  --text-main: #4a2830;
+  --text-muted: #b08a90;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-hand: "Caveat", cursive;
+}
+
+/* === Страница === */
+.page-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--page-bg);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+/* === Фоновые пятна === */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.blob-1 {
+  width: 520px;
+  height: 520px;
+  top: -140px;
+  right: -140px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 182, 193, 0.22) 0%,
+    transparent 70%
+  );
+}
+.blob-2 {
+  width: 420px;
+  height: 420px;
+  bottom: -100px;
+  left: -110px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 218, 224, 0.28) 0%,
+    transparent 70%
+  );
+}
+.blob-3 {
+  width: 220px;
+  height: 220px;
+  top: 45%;
+  left: 8%;
+  background: radial-gradient(
+    circle,
+    rgba(252, 200, 210, 0.18) 0%,
+    transparent 70%
+  );
+}
+
+/* === Контент === */
+.content-center {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+/* === Сердце === */
+.heart-wrap {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+.heart-wrap:hover {
+  transform: scale(1.04);
+}
+.heart-img {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow:
+    0 8px 40px rgba(212, 105, 122, 0.18),
+    0 2px 12px rgba(212, 105, 122, 0.1);
+  display: block;
+}
+.heart-wrap.beating .heart-img {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.06);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.04);
+  }
+  70% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 240, 243, 0.45);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.3s;
+}
+.play-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--rose);
+  box-shadow: 0 2px 16px rgba(212, 105, 122, 0.18);
+  padding-left: 4px;
+}
+
+/* === Текст трека === */
+.track-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.now-playing {
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+.track-name {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.track-sub {
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  color: var(--rose-light);
+  margin-top: 0.1rem;
+}
+
+/* === Плеер === */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(212, 105, 122, 0.12);
+  border-radius: 50px;
+  padding: 10px 22px 10px 14px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 20px rgba(212, 105, 122, 0.08);
+}
+
+.play-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--rose);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  font-size: 13px;
+}
+.play-btn:hover {
+  background: #c45870;
+  transform: scale(1.06);
+}
+.play-triangle {
+  margin-left: 3px;
+  line-height: 1;
+}
+.pause-bars {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.pause-bars i {
+  display: block;
+  width: 3px;
+  height: 13px;
+  background: white;
+  border-radius: 2px;
+  font-style: normal;
+}
+
+/* === Волны === */
+.waves {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+}
+.bar {
+  width: 3px;
+  height: var(--bar-height, 10px);
+  background: var(--rose-light);
+  border-radius: 2px;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+.bar.animating {
+  opacity: 1;
+  animation: wave 0.85s ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes wave {
+  from {
+    transform: scaleY(0.3);
+    opacity: 0.5;
+  }
+  to {
+    transform: scaleY(1.2);
+    opacity: 1;
+  }
+}
+
+/* === Подсказка === */
+.hint {
+  font-family: var(--font-hand);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  opacity: 0.8;
+  animation: fadeInUp 1.2s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .heart-img {
+    width: 220px;
+    height: 220px;
+  }
+  .track-name {
+    font-size: 2.2rem;
+  }
+  .player {
+    padding: 8px 16px 8px 10px;
+  }
+}
